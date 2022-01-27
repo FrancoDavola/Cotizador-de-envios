@@ -1,10 +1,10 @@
-const yearSelect = document.querySelector('#year')
-const formulario = document.querySelector('#cotizar-seguro')
+const kmSelect = document.querySelector('#km')
+const formulario = document.querySelector('#cotizar-envio')
 
 
-function Seguro(marca, year , tipo){
+function Envio(marca, km , tipo){
     this.marca  = marca;
-    this.year = year ;
+    this.km = km ;
     this.tipo = tipo;
 }
 
@@ -16,30 +16,30 @@ iU.prototype.llenarOpciones = () => {
     
 
     for(let i = 1; i <= 35 ; i++){
-        const optionYear = document.createElement('option')
-        optionYear.textContent = `${i} Km's`
-        optionYear.dataset.id = i
-        yearSelect.appendChild(optionYear)
+        const optionKm = document.createElement('option')
+        optionKm.textContent = `${i} Km's`
+        optionKm.dataset.id = i
+        kmSelect.appendChild(optionKm)
     }
 
 }
 
-Seguro.prototype.cotizarSeguro = function(){
+Envio.prototype.cotizarEnvio = function(){
 
      let cantidad;
-     let baseCaba = 130
-     let baseNorte = 135
-     let baseOeste = 140
-     let baseSur = 120
+     let baseCaba = 105
+     let baseNorte = 95
+     let baseOeste = 90
+     let baseSur = 110
 
     switch(this.marca){
-        case '1' : cantidad = baseCaba * Number(this.year.slice(0 ,1))
+        case '1' : cantidad = baseCaba * Number(this.km.slice(0 ,1))
     break;
-        case '2' : cantidad = baseNorte * Number(this.year.slice(0 ,1))
+        case '2' : cantidad = baseNorte * Number(this.km.slice(0 ,1))
     break;
-        case '3' : cantidad = baseOeste * Number(this.year.slice(0 ,1))
+        case '3' : cantidad = baseOeste * Number(this.km.slice(0 ,1))
     break;
-        case '4' : cantidad = baseSur * Number(this.year.slice(0 ,1))
+        case '4' : cantidad = baseSur * Number(this.km.slice(0 ,1))
     break;
         default:
 
@@ -56,7 +56,7 @@ Seguro.prototype.cotizarSeguro = function(){
              return cantidad; 
 }
 
-iU.prototype.mostrarResultado = (total , seguro) => {
+iU.prototype.mostrarResultado = (total , envio) => {
 
     const div = document.createElement('div')
     div.classList.add('mt-10')
@@ -108,17 +108,17 @@ document.addEventListener('DOMContentLoaded' , () => {
 
 eventListener()
     function eventListener(){
-      formulario.addEventListener('submit' , cotizarSeguro)
+      formulario.addEventListener('submit' , cotizarEnvio)
 }
 
-function cotizarSeguro(e){
+function cotizarEnvio(e){
     e.preventDefault()
     
     const marca = document.querySelector('#marca').value
-    const year = document.querySelector('#year').value
+    const km = document.querySelector('#km').value
     const tipo = document.querySelector('input[name="tipo"]:checked').value
     
-    if(marca == '' || year == '' || tipo == ''){
+    if(marca == '' || km == '' || tipo == ''){
         iu.mostrarMensaje('Los campos estan vacios' , 'error')
         return;
     }
@@ -131,10 +131,10 @@ function cotizarSeguro(e){
             }
 
 
-    const seguro = new Seguro(marca, year , tipo)
-    const total =  seguro.cotizarSeguro()
+    const envio = new Envio(marca, km , tipo)
+    const total =  envio.cotizarEnvio()
 
-    iu.mostrarResultado(total , seguro)
+    iu.mostrarResultado(total , envio)
 
 
 }
